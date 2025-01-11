@@ -1,8 +1,8 @@
 $gtk.disable_controller_config
 
 require "lib/dragonborn/dragonborn"
-require "lib/dr-particles/app/particles"
 require "lib/hoard/hoard"
+require "lib/dr-particles/app/particles"
 require "lib/hoard/ldtk/root"
 require "lib/dragonjson/json"
 

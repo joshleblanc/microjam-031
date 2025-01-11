@@ -3,7 +3,7 @@ module Entities
     attr_reader :notifier, :walk_speed, :user
 
     def initialize(user:)
-      super(12, 9, user)
+      super(cx: 12, cy: 9, parent: user)
 
       @tile_x = 0
       @tile_y = 16 * 12

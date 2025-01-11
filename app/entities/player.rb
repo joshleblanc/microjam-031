@@ -1,5 +1,7 @@
 module Entities
   class Player < Hoard::Entity
+    collidable
+
     attr_reader :notifier, :walk_speed, :user
 
     def initialize(user:)
@@ -17,8 +19,6 @@ module Entities
 
       @scale_x = 1
       @scale_y = 1
-
-      @path = "sprites/monochrome_tilemap_transparent_packed.png"
 
       @walk_speed = 0
 
@@ -80,10 +80,13 @@ module Entities
       if Game.s.inputs.keyboard.key_held.left
         @walk_speed = -0.6
         self.dir = -1
+        p "On ground? #{on_ground?}, #{v_base.dy}, #{yr}, #{has_collision(cx, cy + 1)}"
         send_to_scripts(:play_animation, :walk) if on_ground?
       elsif Game.s.inputs.keyboard.key_held.right
         @walk_speed = 0.6
         self.dir = 1
+        p "On ground? #{on_ground?}, #{v_base.dy}, #{yr}, #{has_collision(cx, cy + 1)}"
+
         send_to_scripts(:play_animation, :walk) if on_ground?
       else
         send_to_scripts(:play_animation, :idle) if on_ground? && !cd.has("landing")

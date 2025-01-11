@@ -29,7 +29,7 @@ class Game < Hoard::Game
 
       next unless he
 
-      he.new(entity.grid[0], entity.grid[1], self).tap do |m|
+      he.new(cx: entity.grid[0], cy: entity.grid[1], parent: self).tap do |m|
         m.send_to_scripts("ldtk_entity=", entity)
         entity.field_instances.each do |field|
           m.send_to_scripts("#{field.identifier}=", field.value)

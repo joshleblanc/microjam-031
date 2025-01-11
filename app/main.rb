@@ -22,6 +22,7 @@ def tick(args)
   args.outputs.background_color = [0, 0, 0]
 
   if args.state.tick_count == 1
+    args.audio[:bg_music] = { input: "sounds/boss.ogg", looping: true }
     Game.s.start_level(Game.s.root.levels.first)
   end
 end

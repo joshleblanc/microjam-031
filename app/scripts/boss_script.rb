@@ -4,7 +4,7 @@ module Scripts
 
     def init
       p "hullo?"
-      @current_phase = 1
+      @current_phase = 2
       # run this next frame
       Hoard::Scheduler.schedule do |s, blk|
         s.wait { activate_next_phase! }
@@ -13,7 +13,7 @@ module Scripts
 
     def activate_next_phase!
       @current_phase += 1
-      if @current_phase >= PHASES
+      if @current_phase > PHASES
         @current_phase = 1
       end
       p "activating next phase"

@@ -4,6 +4,7 @@ module Entities
     script Scripts::BossScript.new
     script Scripts::BossAttack1Script.new
     script Scripts::BossAttack2Script.new
+    script Scripts::BossAttack3Script.new
     script Hoard::Scripts::HealthScript.new(health: 100)
   end
 end

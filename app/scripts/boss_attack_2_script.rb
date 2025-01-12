@@ -1,20 +1,22 @@
 module Scripts
-  class BossAttack1Script < Hoard::Script
+  class BossAttack2Script < Hoard::Script
     HAZARD_WARNING_TIME = 3 * 60  # 3 seconds in frames
     HAZARD_ACTIVE_TIME = 2 * 60   # 2 seconds in frames
     HAZARD_FADE_TIME = 30         # 0.5 seconds in frames
+    PILLAR_WIDTH = 48             # Width of each damage pillar
 
     def init
-      @platform_spawns ||= []
+      @pillar_spawns ||= []
       @phase_started = false
-    end
-
-    def platforms
-      entity.children.select { |child| child.is_a?(Entities::Platform) }
     end
 
     def hazards
       entity.children.select { |child| child.is_a?(Entities::FireHazard) }
+    end
+
+    def register_pillar_spawn(pillar_spawn)
+      @pillar_spawns ||= []
+      @pillar_spawns << pillar_spawn
     end
 
     def activate!
@@ -23,41 +25,24 @@ module Scripts
       @wave_timer = HAZARD_WARNING_TIME
       @current_wave = -1
 
-      @platform_spawns.each do |platform_spawn|
-        Entities::Platform.new(
-          cx: platform_spawn.cx,
-          cy: platform_spawn.cy,
-          parent: self.entity,
-          tile_w: 48,
-          w: 48,
-        )
+      @pillar_spawns.each do |pillar_spawn|
         Entities::FireHazard.new(
-          cx: platform_spawn.cx,
-          cy: platform_spawn.cy - 1,
+          cx: pillar_spawn.cx,
+          cy: pillar_spawn.cy,
           parent: self.entity,
-          tile_w: 48,
-          w: 48,
+          tile_w: PILLAR_WIDTH,
+          w: PILLAR_WIDTH,
+          h: 800,
         )
       end
 
       @phase_started = true
-
       start_next_wave!
-    end
-
-    def register_platform_spawn(platform_spawn)
-      @platform_spawns ||= []
-      @platform_spawns << platform_spawn
     end
 
     def finish_phase!
       @phase_started = false
-      p "Destroying children #{entity.children.count}"
       entity.destroy_all_children!
-
-      p "Destroyed all children #{entity.children.count}"
-      p Hoard::Process::ROOTS
-
       entity.send_to_scripts(:activate_next_phase!)
     end
 
@@ -97,30 +82,31 @@ module Scripts
     end
 
     def show_hazards!
-      wave_patterns[@current_wave].each do |platform|
-        hazards[platform]&.send_to_scripts(:preactivate!)
+      wave_patterns[@current_wave].each do |pillar|
+        hazards[pillar]&.send_to_scripts(:preactivate!)
       end
     end
 
     def activate_hazards!
+      p "Activating wave #{@current_wave}"
       wave_patterns[@current_wave].each do |inx|
         hazards[inx]&.send_to_scripts(:activate!)
       end
     end
 
     def clear_hazards!
-      wave_patterns[@current_wave].each do |inx|
-        hazards[inx]&.send_to_scripts(:deactivate!)
+      hazards.each do |hazard|
+        hazard.send_to_scripts(:deactivate!)
       end
     end
 
+    private
+
     def wave_patterns
       [
-        [0],
-        [1, 2],
-        [3, 2],
-        [0, 2, 1],
+        [0, 2, 4],
         [1, 3],
+        [0, 1, 2, 3, 4],
       ]
     end
   end

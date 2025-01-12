@@ -22,7 +22,7 @@ module Scripts
       return if @phase_started
 
       @wave_timer = HAZARD_WARNING_TIME
-      @current_wave = 0
+      @current_wave = -1
 
       @platform_spawns.each do |platform_spawn|
         Entities::Platform.new(
@@ -42,7 +42,6 @@ module Scripts
       end
 
       @phase_started = true
-      p "START"
 
       start_next_wave!
     end
@@ -54,11 +53,10 @@ module Scripts
 
     def start_next_wave!
       #return finish_phase if @current_wave >= wave_patterns.length
-
-      show_hazards!
       @wave_timer = HAZARD_WARNING_TIME
       @state = :warning
       @current_wave += 1
+      show_hazards!
     end
 
     def update
@@ -81,7 +79,7 @@ module Scripts
       when :fading
         if @wave_timer <= 0
           clear_hazards!
-          start_next_wave
+          start_next_wave!
         end
       end
     end
@@ -93,6 +91,7 @@ module Scripts
     end
 
     def activate_hazards!
+      p "ACTIVATE HAZARDS #{@current_wave}"
       wave_patterns[@current_wave].each do |inx|
         hazards[inx].send_to_scripts(:activate!)
       end
@@ -108,8 +107,8 @@ module Scripts
       [
         [0],
         [1, 2],
-        [3, 4],
-        [0, 2, 4],
+        [3, 2],
+        [0, 2, 1],
         [1, 3],
       ]
     end

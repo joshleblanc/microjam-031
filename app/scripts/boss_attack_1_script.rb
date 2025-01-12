@@ -5,7 +5,6 @@ module Scripts
     HAZARD_FADE_TIME = 30         # 0.5 seconds in frames
 
     def init
-      p "INIT"
       @platform_spawns ||= []
       @phase_started = false
     end
@@ -18,7 +17,7 @@ module Scripts
       entity.children.select { |child| child.is_a?(Entities::FireHazard) }
     end
 
-    def activate
+    def activate!
       return if @phase_started
 
       @wave_timer = HAZARD_WARNING_TIME
@@ -51,8 +50,13 @@ module Scripts
       @platform_spawns << platform_spawn
     end
 
+    def finish_phase!
+      @phase_started = false
+    end
+
     def start_next_wave!
-      #return finish_phase if @current_wave >= wave_patterns.length
+      return finish_phase! if @current_wave >= wave_patterns.length
+
       @wave_timer = HAZARD_WARNING_TIME
       @state = :warning
       @current_wave += 1
@@ -86,20 +90,19 @@ module Scripts
 
     def show_hazards!
       wave_patterns[@current_wave].each do |platform|
-        hazards[platform].send_to_scripts(:preactivate!)
+        hazards[platform]&.send_to_scripts(:preactivate!)
       end
     end
 
     def activate_hazards!
-      p "ACTIVATE HAZARDS #{@current_wave}"
       wave_patterns[@current_wave].each do |inx|
-        hazards[inx].send_to_scripts(:activate!)
+        hazards[inx]&.send_to_scripts(:activate!)
       end
     end
 
     def clear_hazards!
       wave_patterns[@current_wave].each do |inx|
-        hazards[inx].send_to_scripts(:deactivate!)
+        hazards[inx]&.send_to_scripts(:deactivate!)
       end
     end
 

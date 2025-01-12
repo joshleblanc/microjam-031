@@ -11,6 +11,7 @@ module Scripts
     def on_collision(from)
       return unless from.is_a? Entities::Player
       return unless @active
+      return unless @damage_enabled
 
       p "Applying damage to #{from}, from #{entity}"
 
@@ -19,16 +20,19 @@ module Scripts
 
     def preactivate!
       @active = true
+      @damage_enabled = false
       @alpha_increment = ALPHA_INCREMENT
     end
 
     def activate!
       @alpha_increment = 0
       @alpha = 255
+      @damage_enabled = true
     end
 
     def deactivate!
       @alpha_increment = -ALPHA_INCREMENT
+      @damage_enabled = false
       Hoard::Scheduler.schedule do |s, blk|
         if @alpha == 0
           @active = false

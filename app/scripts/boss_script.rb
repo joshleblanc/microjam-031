@@ -1,10 +1,25 @@
 module Scripts
   class BossScript < Hoard::Script
+    PHASES = 3
+
     def init
+      @current_phase = 0
       # run this next frame
       Hoard::Scheduler.schedule do |s, blk|
-        s.wait { entity.boss_attack_1_script.activate }
+        s.wait { activate_next_phase! }
       end
+    end
+
+    def activate_next_phase!
+      @current_phase += 1
+      if @current_phase >= PHASES
+        @current_phase = 1
+      end
+      activate_phase(@current_phase)
+    end
+
+    def activate_phase(phase)
+      entity.send("boss_attack_#{phase}_script".to_sym).activate!
     end
   end
 end

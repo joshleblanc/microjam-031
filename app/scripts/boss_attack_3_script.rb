@@ -35,8 +35,8 @@ module Scripts
         bullet = Entities::BulletProjectile.new(
           cx: @entity.cx + 0.5,
           cy: @entity.cy - 0.5,
-          w: 10,
-          h: 10,
+          w: 3,
+          h: 3,
         )
         bullet.send_to_scripts(:set_direction, angle)
       end

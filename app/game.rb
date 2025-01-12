@@ -14,6 +14,10 @@ class Game < Hoard::Game
     @player ||= user.spawn_player(Entities::Player)
   end
 
+  def boss
+    @boss ||= Entities::Boss.new(parent: Game.s)
+  end
+
   def start_level(level)
     super(level)
     if level.entity("Player") && !player.spawned?
@@ -22,10 +26,17 @@ class Game < Hoard::Game
       player.send_to_scripts("ldtk_entity=", spawn)
     end
 
+    if level.entity("Boss")
+      boss_spawn = level.entity("Boss")
+      boss.set_pos_case(boss_spawn.grid[0], boss_spawn.grid[1])
+      boss.send_to_scripts("ldtk_entity=", boss_spawn)
+    end
+
     level.layer("Entities").entity_instances.each do |entity|
       he = Hoard::Entity.resolve(entity.identifier)
 
       next if he == Entities::Player
+      next if he == Entities::Boss
 
       next unless he
 

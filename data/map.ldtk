@@ -1048,19 +1048,19 @@
 						},
 						{
 							"__identifier": "Boss",
-							"__grid": [11,7],
+							"__grid": [11,4],
 							"__pivot": [0,0],
 							"__tags": [],
 							"__tile": { "tilesetUid": 6, "x": 0, "y": 288, "w": 16, "h": 16 },
 							"__smartColor": "#E4A672",
-							"iid": "72afba20-c210-11ef-bedd-4b39d0c21a13",
+							"iid": "a8d0aff0-c210-11ef-bedd-319fe577dd57",
 							"width": 16,
 							"height": 16,
 							"defUid": 32,
-							"px": [176,112],
+							"px": [176,64],
 							"fieldInstances": [],
 							"__worldX": 176,
-							"__worldY": 112
+							"__worldY": 64
 						}
 					]
 				},

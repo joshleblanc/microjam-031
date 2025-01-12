@@ -38,6 +38,7 @@ module Entities
       add_script Hoard::Scripts::HealthScript.new(health: 3)
       add_script Hoard::Scripts::JumpScript.new(jumps: 2, power: 0.45)
       add_script Scripts::PlayerCollisionScript.new
+      add_script Scripts::PlayerShootingScript.new
       add_script Hoard::Scripts::HealthScript.new(health: 3)
       send_to_scripts(:play_animation, :idle, true)
     end
@@ -88,6 +89,7 @@ module Entities
 
         send_to_scripts(:play_animation, :walk) if on_ground?
       else
+        self.dir = 0
         send_to_scripts(:play_animation, :idle) if on_ground? && !cd.has("landing")
       end
 

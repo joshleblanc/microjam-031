@@ -3,6 +3,7 @@ module Scripts
     PHASES = 3
 
     def init
+      @positions = {}
       @current_phase = 0
       # run this next frame
       Hoard::Scheduler.schedule do |s, blk|
@@ -10,17 +11,20 @@ module Scripts
       end
     end
 
+    def register_boss_position(position)
+      @positions[position.find_script_property(:phase)] = position
+    end
+
     def activate_next_phase!
       @current_phase += 1
       if @current_phase > PHASES
         @current_phase = 1
       end
-      p "activating next phase"
       activate_phase(@current_phase)
     end
 
     def activate_phase(phase)
-      p "activating #{phase}"
+      entity.move_to @positions[phase], 2000, Hoard::Tween::Type::ELASTIC_END
       entity.send("boss_attack_#{phase}_script".to_sym).activate!
     end
   end

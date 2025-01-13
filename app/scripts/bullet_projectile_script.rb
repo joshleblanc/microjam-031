@@ -1,7 +1,7 @@
 module Scripts
   class BulletProjectileScript < Hoard::Script
     def initialize
-      @speed = 1
+      @speed = 0.1
       @direction = 0
     end
 
@@ -13,8 +13,8 @@ module Scripts
 
     def update
       # Move in the direction set at spawn
-      entity.v_base.dx = Math.cos(@direction) * @speed * entity.dt
-      entity.v_base.dy = Math.sin(@direction) * @speed * entity.dt
+      entity.v_base.dx = Math.cos(@direction) * @speed
+      entity.v_base.dy = Math.sin(@direction) * @speed
 
       # Remove if off screen
       if entity.x < -50 || entity.x > 1330 || entity.y < -50 || entity.y > 770

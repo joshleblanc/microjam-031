@@ -27,7 +27,7 @@ icon=metadata/icon.png
 # that directory (example format: ignore_directories=tmp,saves,dev,assets).
 # ignore_directories=saves
 
-ignore_directories=test,tests,.github,.trunk,caveats,metadata
+ignore_directories=.git,test,tests,.github,.trunk,caveats,metadata,saves
 ignore_directories_recursively=true
 # If you want the ignore_directories list to be applied to child directories, set ignore_directories_recursively=true.
 # IMPORTANT: Any directory that matches the ignore list will be ignored (REGARDLESS OF HIERARCHY).

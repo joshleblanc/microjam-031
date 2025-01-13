@@ -15,11 +15,11 @@ module Scripts
       # Move to right side if not there yet
       if (@entity.x - @target_x).abs > 5
         direction = @target_x > @entity.x ? 1 : -1
-        @entity.x += direction * 300 * entity.dt
+        @entity.x += direction * 300
       end
 
       # Spawn bullets in a circular pattern
-      @bullet_spawn_timer -= entity.dt
+      @bullet_spawn_timer -= 1
       if @bullet_spawn_timer <= 0
         @bullet_spawn_timer = @bullet_spawn_interval
         spawn_bullet_wave

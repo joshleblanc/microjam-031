@@ -2,6 +2,8 @@ module Entities
   class Player < Hoard::Entity
     collidable
 
+    WALK_SPEED = 1
+
     attr_reader :notifier, :walk_speed, :user
 
     def initialize(user:)
@@ -33,7 +35,7 @@ module Entities
       add_script Hoard::Scripts::DisableControlsScript.new
 
       add_script Scripts::PlayerAnimationsScript.new
-      add_script Hoard::Scripts::GravityScript.new(0.025)
+      add_script Hoard::Scripts::GravityScript.new(0.02)
       add_script Hoard::Scripts::HorizontalMovementScript.new
       add_script Hoard::Scripts::HealthScript.new(health: 3)
       add_script Hoard::Scripts::JumpScript.new(jumps: 2, power: 0.45)
@@ -80,16 +82,15 @@ module Entities
       @walk_speed = 0
 
       if Game.s.inputs.keyboard.key_held.left && !cd.has("controls_disabled")
-        @walk_speed = -0.6
+        @walk_speed = -WALK_SPEED
         self.dir = -1
         send_to_scripts(:play_animation, :walk) if on_ground?
       elsif Game.s.inputs.keyboard.key_held.right && !cd.has("controls_disabled")
-        @walk_speed = 0.6
+        @walk_speed = WALK_SPEED
         self.dir = 1
 
         send_to_scripts(:play_animation, :walk) if on_ground?
       else
-        self.dir = 0
         send_to_scripts(:play_animation, :idle) if on_ground? && !cd.has("landing")
       end
 

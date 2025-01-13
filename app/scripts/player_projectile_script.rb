@@ -1,7 +1,7 @@
 module Scripts
   class PlayerProjectileScript < Hoard::Script
     def initialize
-      @speed = 2
+      @speed = 0.25
     end
 
     def init
@@ -10,11 +10,7 @@ module Scripts
 
     def update
       # Move in player's facing direction
-      if @dir == 0
-        entity.v_base.dy = -@speed * entity.dt
-      else
-        entity.v_base.dx = @speed * @dir * entity.dt
-      end
+      entity.v_base.dx = @speed * @dir
 
       # Remove if off screen
       if entity.x < -50 || entity.x > 1330 || entity.y < -50 || entity.y > 770

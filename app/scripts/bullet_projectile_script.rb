@@ -1,7 +1,7 @@
 module Scripts
   class BulletProjectileScript < Hoard::Script
     def initialize
-      @speed = 0.1
+      @speed = 0.05
       @direction = 0
     end
 

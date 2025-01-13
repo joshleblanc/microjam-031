@@ -52,10 +52,8 @@ module Scripts
 
     def finish_phase!
       @phase_started = false
-      p "Destroying children #{entity.children.count}"
       entity.destroy_all_children!
 
-      p "Destroyed all children #{entity.children.count}"
       p Hoard::Process::ROOTS
 
       entity.send_to_scripts(:activate_next_phase!)

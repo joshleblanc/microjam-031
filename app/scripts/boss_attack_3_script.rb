@@ -3,7 +3,7 @@ module Scripts
     def initialize
       @active = false
       @bullet_spawn_timer = 0
-      @bullet_spawn_interval = 0.25
+      @bullet_spawn_interval = 60
       @rotation = 0
       @bullets_per_wave = 1
       @target_x = 1100  # Right side of the screen
@@ -11,12 +11,6 @@ module Scripts
 
     def update
       return unless @active
-
-      # Move to right side if not there yet
-      if (@entity.x - @target_x).abs > 5
-        direction = @target_x > @entity.x ? 1 : -1
-        @entity.x += direction * 300
-      end
 
       # Spawn bullets in a circular pattern
       @bullet_spawn_timer -= 1
@@ -31,7 +25,7 @@ module Scripts
 
     def spawn_bullet_wave
       @bullets_per_wave.times do |i|
-        angle = (@rotation + (i * 360.0 / @bullets_per_wave)) * Math::PI / 180.0
+        angle = Geometry.angle(entity, Game.s.player).to_radians
         bullet = Entities::BulletProjectile.new(
           cx: @entity.cx + 0.5,
           cy: @entity.cy - 0.5,

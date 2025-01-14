@@ -58,6 +58,8 @@ module Scripts
         y: entity.ry,
         w: entity.rw,
         h: entity.rh,
+        anchor_x: entity.anchor_x,
+        anchor_y: entity.anchor_y,
         r: 255, g: 0, b: 0, a: @alpha,
         primitive_marker: :solid,
       }

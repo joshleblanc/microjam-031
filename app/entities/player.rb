@@ -61,7 +61,7 @@ module Entities
       Game.s.fx.anim({
         path: "sprites/effects.png",
         x: center_x,
-        y: center_y.from_top + 4,
+        y: center_y + 4,
         tile_w: 64,
         tile_h: 64,
         tile_x: 0,

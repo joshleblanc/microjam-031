@@ -40,8 +40,12 @@ class Game < Hoard::Game
 
       next unless he
 
-      he.new(cx: entity.grid[0], cy: entity.grid[1], parent: self).tap do |m|
+      he.new(
+        cx: entity.grid[0], cy: entity.grid[1], anchor_x: entity.pivot[0], anchor_y: entity.pivot[1],
+        parent: self, w: entity.width, h: entity.height,
+      ).tap do |m|
         m.send_to_scripts("ldtk_entity=", entity)
+
         entity.field_instances.each do |field|
           m.send_to_scripts("#{field.identifier}=", field.value)
           m.args = $args
@@ -49,4 +53,9 @@ class Game < Hoard::Game
       end
     end
   end
+
+  # def render
+  #   super
+  #   Debug.render_grid(outputs[:scene])
+  # end
 end

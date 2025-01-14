@@ -30,6 +30,8 @@ module Scripts
           parent: self.entity,
           tile_w: 48,
           w: 48,
+          anchor_x: platform_spawn.anchor_x,
+          anchor_y: platform_spawn.anchor_y,
         )
         Entities::FireHazard.new(
           cx: platform_spawn.cx,
@@ -37,6 +39,8 @@ module Scripts
           parent: self.entity,
           tile_w: 48,
           w: 48,
+          anchor_x: platform_spawn.anchor_x,
+          anchor_y: platform_spawn.anchor_y,
         )
       end
 

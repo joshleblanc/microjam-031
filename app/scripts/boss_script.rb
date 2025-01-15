@@ -12,6 +12,7 @@ module Scripts
     end
 
     def register_boss_position(position)
+      p "Registering boss position, #{position}, #{position.find_script_property(:phase)}"
       @positions[position.find_script_property(:phase)] = position
     end
 
@@ -24,6 +25,7 @@ module Scripts
     end
 
     def activate_phase(phase)
+      p "activating #{phase}, move to: #{@positions[phase]}"
       entity.move_to @positions[phase], 2000, Hoard::Tween::Type::ELASTIC_END
       entity.send("boss_attack_#{phase}_script".to_sym).activate!
     end

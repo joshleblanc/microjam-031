@@ -1195,7 +1195,7 @@
 							"height": 16,
 							"defUid": 50,
 							"px": [200,88],
-							"fieldInstances": [{ "__identifier": "phase", "__type": "Int", "__value": 0, "__tile": null, "defUid": 51, "realEditorValues": [] }],
+							"fieldInstances": [{ "__identifier": "phase", "__type": "Int", "__value": 1, "__tile": null, "defUid": 51, "realEditorValues": [{ "id": "V_Int", "params": [1] }] }],
 							"__worldX": 200,
 							"__worldY": 88
 						}

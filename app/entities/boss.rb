@@ -5,7 +5,8 @@ module Entities
     script Scripts::BossAttack1Script.new
     script Scripts::BossAttack2Script.new
     script Scripts::BossAttack3Script.new
-    script Scripts::BossHealthBarScript.new
     script Hoard::Scripts::HealthScript.new(health: 100, bounce: false)
+
+    widget Widgets::BossHealthWidget.new
   end
 end

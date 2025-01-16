@@ -26,8 +26,9 @@ module Scripts
 
     def activate!
       @alpha_increment = 0
-      @alpha = 255
+      @alpha = 0
       @damage_enabled = true
+      entity.send_to_scripts(:play_animation, :default, true)
     end
 
     def deactivate!

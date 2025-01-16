@@ -27,9 +27,6 @@ module Scripts
         Game.s.boss.apply_damage(10, entity.parent)
         entity.destroy!
       end
-      args.outputs[:scene].solids << {
-        x: entity.rx, y: entity.ry, w: entity.w, h: entity.h, r: 0, g: 255, b: 0,
-      }
     end
   end
 end

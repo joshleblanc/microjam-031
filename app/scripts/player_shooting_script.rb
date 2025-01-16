@@ -24,8 +24,8 @@ module Scripts
       Entities::PlayerProjectile.new(
         cx: entity.cx + offset_x,
         cy: entity.cy + offset_y,
-        w: 3,
-        h: 3,
+        w: 8,
+        h: 8,
         parent: entity,
       )
     end

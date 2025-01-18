@@ -39,37 +39,5 @@ module Entities
       add_script Hoard::Scripts::MoveToNeighbourScript.new
       send_to_scripts(:play_animation, :idle, true)
     end
-
-    def spawned?
-      @spawned
-    end
-
-    def respawn!
-      send_to_scripts(:reset!)
-      @spawned = false
-      Game.s.start_game
-      @destroyed = false
-      @visible = true
-      v_base.clear
-      v_bump.clear
-
-      Game.s.fx.anim({
-        path: "sprites/effects.png",
-        x: center_x,
-        y: center_y + 4,
-        tile_w: 64,
-        tile_h: 64,
-        tile_x: 0,
-        tile_y: 4 * 64,
-        frames: 11,
-        w: 32,
-        h: 32,
-      })
-    end
-
-    def set_pos_case(cx, cy)
-      super(cx, cy)
-      @spawned = true
-    end
   end
 end

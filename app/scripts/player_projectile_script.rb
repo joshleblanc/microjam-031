@@ -20,9 +20,6 @@ module Scripts
 
     def post_update
       intersecting = Geometry.intersect_rect?(Game.s.boss, entity, 0)
-      boss_rect = { x: Game.s.boss.x, y: Game.s.boss.y, w: Game.s.boss.w, h: Game.s.boss.h }
-      bullet_rect = { x: entity.x, y: entity.y, w: entity.w, h: entity.h }
-      p "Intersecting #{intersecting}, #{boss_rect}, #{bullet_rect}"
       if intersecting
         Game.s.boss.apply_damage(10, entity.parent)
         entity.destroy!

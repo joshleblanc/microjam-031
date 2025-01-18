@@ -22,10 +22,10 @@ module Scripts
       offset_y = -0.25
 
       Entities::PlayerProjectile.new(
-        cx: entity.cx + offset_x,
-        cy: entity.cy + offset_y,
-        w: 8,
-        h: 8,
+        cx: entity.cx,
+        cy: entity.cy,
+        w: 16,
+        h: 16,
         parent: entity,
       )
     end

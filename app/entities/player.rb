@@ -1,25 +1,14 @@
 module Entities
   class Player < Hoard::Entity
     collidable
-    attr_reader :notifier, :walk_speed, :user
+    attr_reader :user
 
     def initialize(user:)
       super(cx: 12, cy: 9, parent: user)
 
       @user = user
 
-      @tile_w = 16
-      @tile_h = 16
-      @w = 16
-      @h = 16
-
-      @scale_x = 1
-      @scale_y = 1
-
-      @walk_speed = 0
-
       @v_base.set_fricts(0.84, 0.94)
-      @spawned = false
 
       Game.s.camera.track_entity(self, true)
       Game.s.camera.clamp_to_level_bounds = true

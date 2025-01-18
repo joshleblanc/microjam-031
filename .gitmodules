@@ -1,0 +1,12 @@
+[submodule "hoard"]
+	path = lib/hoard
+	url = https://github.com/joshleblanc/hoard
+[submodule "dr-particles"]
+  path = lib/dr-particles
+  url = https://github.com/owenbutler/dr-particles
+[submodule "dragonborn"]
+  path = lib/dragonborn
+  url = https://github.com/pvande/dragonborn
+[submodule "dragonjson"]
+  path = lib/dragonjson
+  url = https://github.com/leviongit/dragonjson

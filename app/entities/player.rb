@@ -26,6 +26,14 @@ module Entities
       add_script Hoard::Scripts::HealthScript.new(health: 3)
       add_script Hoard::Scripts::PlatformerControlsScript.new
       add_script Hoard::Scripts::MoveToNeighbourScript.new
+      add_script Hoard::Scripts::EffectScript.new(:jump_effect, {
+        path: "sprites/smoke-effects/smoke2.png",
+        tile_w: 64,
+        tile_h: 64,
+        tile_x: 0,
+        tile_y: 11 * 64,
+        frames: 11,
+      })
       send_to_scripts(:play_animation, :idle, true)
     end
   end

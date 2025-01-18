@@ -2,4 +2,5 @@ All assets are cc0
 
 background music: https://opengameart.org/content/great-boss
 tileset: https://www.kenney.nl/assets/1-bit-platformer-pack
-effects: https://www.kenney.nl/assets/particle-pack
+
+smoke-effects: https://bdragon1727.itch.io/free-smoke-fx-pixel-2

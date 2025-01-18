@@ -1,16 +1,10 @@
 module Entities
   class Player < Hoard::Entity
     collidable
-
-    WALK_SPEED = 1
-
     attr_reader :notifier, :walk_speed, :user
 
     def initialize(user:)
       super(cx: 12, cy: 9, parent: user)
-
-      @tile_x = 0
-      @tile_y = 16 * 12
 
       @user = user
 
@@ -36,12 +30,13 @@ module Entities
 
       add_script Scripts::PlayerAnimationsScript.new
       add_script Hoard::Scripts::GravityScript.new(0.02)
-      add_script Hoard::Scripts::HorizontalMovementScript.new
       add_script Hoard::Scripts::HealthScript.new(health: 3)
       add_script Hoard::Scripts::JumpScript.new(jumps: 2, power: 0.45)
       add_script Scripts::PlayerCollisionScript.new
       add_script Scripts::PlayerShootingScript.new
       add_script Hoard::Scripts::HealthScript.new(health: 3)
+      add_script Hoard::Scripts::PlatformerControlsScript.new
+      add_script Hoard::Scripts::MoveToNeighbourScript.new
       send_to_scripts(:play_animation, :idle, true)
     end
 
@@ -75,83 +70,6 @@ module Entities
     def set_pos_case(cx, cy)
       super(cx, cy)
       @spawned = true
-    end
-
-    def pre_update
-      super
-      @walk_speed = 0
-
-      if Game.s.inputs.keyboard.key_held.left && !cd.has("controls_disabled")
-        @walk_speed = -WALK_SPEED
-        self.dir = -1
-        send_to_scripts(:play_animation, :walk) if on_ground?
-      elsif Game.s.inputs.keyboard.key_held.right && !cd.has("controls_disabled")
-        @walk_speed = WALK_SPEED
-        self.dir = 1
-
-        send_to_scripts(:play_animation, :walk) if on_ground?
-      else
-        send_to_scripts(:play_animation, :idle) if on_ground? && !cd.has("landing")
-      end
-
-      if Game.s.inputs.keyboard.key_held.up && !cd.has("controls_disabled")
-        @walk_speed = 0
-        if Game.s.current_level.layer("Collisions").int(cx, cy) == 2 # ladder
-          v_base.dy = -0.2
-        end
-      end
-    end
-
-    ##
-    # Move an entity to a new level, given their current world coords
-    def move_to_neighbour(wx, wy)
-      level = Game.s.current_level
-      neighbour = level.find_neighbour(wx, wy)
-
-      return unless neighbour
-
-      wcx = (neighbour.world_x / Hoard::Const::GRID)
-      wcy = (neighbour.world_y / Hoard::Const::GRID)
-
-      set_pos_case(wx - wcx, wy - wcy)
-      Game.s.start_level(neighbour)
-    end
-
-    def on_pre_step_x
-      super
-
-      if xr > 0.8
-        self.xr = 0.8 if has_collision(cx + 1, cy)
-        move_to_neighbour(wcx + 1, wcy) if has_exit?(cx + 1, cy)
-      end
-
-      if xr < 0.2
-        self.xr = 0.2 if has_collision(cx - 1, cy)
-        move_to_neighbour(wcx - 1, wcy) if has_exit?(cx - 1, cy)
-      end
-    end
-
-    def on_pre_step_y
-      super
-
-      if yr >= 1
-        move_to_neighbour(wcx, wcy + 1) if has_exit?(cx, cy + 1)
-      end
-
-      if yr < 0.2
-        move_to_neighbour(wcx, wcy - 1) if has_exit?(cx, cy - 1)
-      end
-
-      if yr < 0.2
-        if has_collision(cx, cy - 1)
-          self.yr = 0.2
-        end
-      end
-    end
-
-    def post_update
-      super
-      #@notifier.post_update
     end
   end
 end

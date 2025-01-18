@@ -31,9 +31,19 @@ module Entities
         tile_w: 64,
         tile_h: 64,
         tile_x: 0,
-        tile_y: 11 * 64,
+        tile_y: 10 * 64,
         frames: 11,
       })
+
+      add_script Hoard::Scripts::EffectScript.new(:skid, {
+        path: "sprites/smoke-effects/smoke1.png",
+        tile_w: 64,
+        tile_h: 64,
+        tile_x: 0,
+        tile_y: 0,
+        frames: 11,
+      })
+
       send_to_scripts(:play_animation, :idle, true)
     end
   end

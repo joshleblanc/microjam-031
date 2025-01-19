@@ -29,10 +29,11 @@ module Scripts
         Entities::FireHazard.new(
           cx: pillar_spawn.cx,
           cy: pillar_spawn.cy,
+          anchor_y: 1,
           parent: self.entity,
           tile_w: PILLAR_WIDTH,
           w: PILLAR_WIDTH,
-          h: 800,
+          h: 100,
         )
       end
 

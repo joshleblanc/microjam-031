@@ -4,7 +4,7 @@ module Scripts
 
     def init
       @positions = {}
-      @current_phase = 0
+      @current_phase = 1
       # run this next frame
       Hoard::Scheduler.schedule do |s, blk|
         s.wait { activate_next_phase! }

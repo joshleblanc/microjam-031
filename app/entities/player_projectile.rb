@@ -2,7 +2,7 @@ module Entities
   class PlayerProjectile < Hoard::Entity
     script Hoard::Scripts::AnimationScript.new(
       :player_projectile,
-      frames: 13,
+      frames: 10,
       path: "sprites/smoke-effects/smoke3.png",
       tile_w: 64,
       tile_h: 64,

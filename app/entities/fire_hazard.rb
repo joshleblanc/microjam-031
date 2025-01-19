@@ -11,6 +11,8 @@ module Entities
       y: 9 * 64,
     )
 
+    script Hoard::Scripts::DebugRenderScript.new
+
     def initialize(...)
       super
 
@@ -20,7 +22,9 @@ module Entities
         path: "sprites/smoke-effects/smoke3.png",
         tile_w: 64,
         tile_h: 64,
-        offset_y: (rh / 2) - 2,
+        w: 64,
+        h: 48,
+        offset_y: 22,
         speed: 0.9,
         x: 0,
         y: 1 * 64,

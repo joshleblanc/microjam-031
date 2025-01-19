@@ -39,8 +39,9 @@ module Scripts
           parent: self.entity,
           tile_w: 48,
           w: 48,
+          h: 48,
           anchor_x: platform_spawn.anchor_x,
-          anchor_y: platform_spawn.anchor_y,
+          anchor_y: 1,
         )
       end
 

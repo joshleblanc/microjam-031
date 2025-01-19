@@ -1,11 +1,7 @@
 module Scripts
   class FireHazardScript < Hoard::Script
-    ALPHA_INCREMENT = 10
-
     def init
       @active = false
-      @alpha = 0
-      @alpha_increment = ALPHA_INCREMENT
     end
 
     def on_collision(from)
@@ -19,51 +15,20 @@ module Scripts
     end
 
     def preactivate!
+      entity.send_to_scripts(:play_animation, :pre_fire, false)
       @active = true
       @damage_enabled = false
-      @alpha_increment = ALPHA_INCREMENT
     end
 
     def activate!
-      @alpha_increment = 0
-      @alpha = 0
       @damage_enabled = true
-      entity.send_to_scripts(:play_animation, :default, true)
+      entity.send_to_scripts(:play_animation, :fire, false) do
+        @damage_enabled = false
+      end
     end
 
     def deactivate!
-      @alpha_increment = -ALPHA_INCREMENT
       @damage_enabled = false
-      Hoard::Scheduler.schedule do |s, blk|
-        if @alpha == 0
-          @active = false
-        else
-          s.wait(1, &blk)
-        end
-      end
-    end
-
-    def update
-      return unless @active
-      next_alpha = @alpha + @alpha_increment
-      if @alpha_increment > 0 && next_alpha < 125
-        @alpha = next_alpha
-      elsif @alpha_increment < 0 && next_alpha > 0
-        @alpha = next_alpha
-      end
-    end
-
-    def post_update
-      args.outputs[:scene].primitives << {
-        x: entity.rx,
-        y: entity.ry,
-        w: entity.rw,
-        h: entity.rh,
-        anchor_x: entity.anchor_x,
-        anchor_y: entity.anchor_y,
-        r: 255, g: 0, b: 0, a: @alpha,
-        primitive_marker: :solid,
-      }
     end
   end
 end

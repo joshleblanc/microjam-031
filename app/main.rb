@@ -14,15 +14,32 @@ end
 Hoard::Process.server = true
 Hoard::Process.client = true
 
+def measure_allocations(*args, &blk)
+  before, after = {}, {}
+  ObjectSpace.count_objects(before)
+  result = blk.call(*args)
+  ObjectSpace.count_objects(after)
+
+  after.merge(before) { |k, v1, v2| v1 - v2 }.each do |k, v|
+    $args.outputs.debug << "#{k}: #{v}"
+  end
+
+  return result
+end
+
 def tick(args)
-  Game.s.args = args
-  Game.s.tick
+  measure_allocations do
+    Game.s.args = args
+    Game.s.tick
 
-  args.outputs.primitives << args.gtk.framerate_diagnostics_primitives
-  args.outputs.background_color = [0, 0, 0]
+    args.outputs.debug << "#{args.gtk.current_framerate} fps"
+    args.outputs.debug << "#{args.gtk.current_framerate_calc} fps simulation"
+    args.outputs.debug << "#{args.gtk.current_framerate_render} fps render"
+    args.outputs.background_color = [0, 0, 0]
 
-  if args.state.tick_count == 1
-    args.audio[:bg_music] = { input: "sounds/boss.ogg", looping: true, gain: 0.175 }
-    Game.s.start_level(Game.s.root.levels.first)
+    if args.state.tick_count == 1
+      args.audio[:bg_music] = { input: "sounds/boss.ogg", looping: true, gain: 0.175 }
+      Game.s.start_level(Game.s.root.levels.first)
+    end
   end
 end

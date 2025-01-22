@@ -11,7 +11,7 @@ module Entities
       y: 9 * 64,
     )
 
-    script Hoard::Scripts::DebugRenderScript.new
+    # script Hoard::Scripts::DebugRenderScript.new
 
     def initialize(...)
       super

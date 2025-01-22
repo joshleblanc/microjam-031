@@ -32,7 +32,7 @@ class Game < Hoard::Game
       boss.send_to_scripts("ldtk_entity=", boss_spawn)
     end
 
-    level.layer("Entities").entity_instances.each do |entity|
+    Array.each(level.layer("Entities").entity_instances) do |entity|
       he = Hoard::Entity.resolve(entity.identifier)
 
       next if he == Entities::Player

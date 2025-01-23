@@ -37,9 +37,13 @@ def tick(args)
     args.outputs.debug << "#{args.gtk.current_framerate_render} fps render"
     args.outputs.background_color = [0, 0, 0]
 
-    if args.state.tick_count == 1
-      args.audio[:bg_music] = { input: "sounds/boss.ogg", looping: true, gain: 0.175 }
-      Game.s.start_level(Game.s.root.levels.first)
+    if args.state.tick_count == 0 
+      Entities::Menu.new
     end
+
+    # if args.state.tick_count == 1
+    #   args.audio[:bg_music] = { input: "sounds/boss.ogg", looping: true, gain: 0.175 }
+    #   Game.s.start_level(Game.s.root.levels.first)
+    # end
   end
 end

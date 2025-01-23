@@ -45,7 +45,7 @@ ignore_directories_recursively=true
 
 # === Flags available in DragonRuby Game Toolkit Pro ====
 # Uncomment the entry below to bytecode compile your Ruby code
-# compile_ruby=true
+compile_ruby=true
 
 # Uncomment the entry below to specify the package name for your APK
 # packageid=org.dev.gamename

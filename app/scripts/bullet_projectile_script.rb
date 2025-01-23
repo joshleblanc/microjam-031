@@ -25,11 +25,5 @@ module Scripts
     def set_direction(angle)
       @direction = angle
     end
-
-    def post_update
-      args.outputs[:scene].solids << {
-        x: entity.rx, y: entity.ry, w: entity.w, h: entity.h, r: 255, g: 0, b: 0,
-      }
-    end
   end
 end

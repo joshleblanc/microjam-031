@@ -1,15 +1,15 @@
 module Widgets
   class MenuWidget < Hoard::Widget
 
-    class Button < Hoard::Ui::Element     
+    class Button < Hoard::Ui::Element
       default_block do
         button(
-          w: "100%", h: "100%", 
+          w: "100%", 
           align: :center, justify: :center, 
           border: { r: 0, g: 0, b: 0 },
           background: { r: 255, g: 255, b: 255, a: 100 },
         ) do 
-          render_content
+          text { props.label }
         end 
       end
     end
@@ -29,18 +29,21 @@ module Widgets
           }) do 
             row do 
               col(span: 12) do
-                menu_widget_button(w: "100%", h: 40) do 
-                  text { "Play!"}
-                end
+                menu_widget_button(w: "100%", label: "Play!")
               end
             end
-            # row do 
-            #   col(span: 12) do
-            #      embed(Button.new do 
-            #         text { "Quit!" }
-            #      end)
-            #   end
-            # end
+            row do 
+              col(span: 12) do
+                button(
+                  w: "100%", h: 40, 
+                  align: :center, justify: :center, 
+                  border: { r: 0, g: 0, b: 0 },
+                  background: { r: 255, g: 255, b: 255, a: 100 },
+                ) do 
+                  text { "Quit!" }
+                end 
+              end
+            end
           end
         end
       end

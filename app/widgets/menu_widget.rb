@@ -1,16 +1,18 @@
 module Widgets
   class MenuWidget < Hoard::Widget
 
-    BTN = ->(text = "Play") {
-      button(
-        w: "75%", h: 40, 
-        align: :center, justify: :center, 
-        border: { r: 0, g: 0, b: 0 },
-        background: { r: 255, g: 255, b: 255, a: 100 },
-      ) do 
-        text(color: { r: 0, g: 0, b: 0 }) { text }
+    class Button < Hoard::Ui::Element     
+      default_block do
+        button(
+          w: "100%", h: "100%", 
+          align: :center, justify: :center, 
+          border: { r: 0, g: 0, b: 0 },
+          background: { r: 255, g: 255, b: 255, a: 100 },
+        ) do 
+          render_content
+        end 
       end
-    }
+    end
 
     def render
       window(key: :menu, w: 1280, h: 720, background: { r: 0, g: 0, b: 0 }) do 
@@ -26,11 +28,19 @@ module Widgets
             border: { r: 255, g: 255, b: 255, a: 150 }
           }) do 
             row do 
-              col(span: 12) { instance_exec "Play!", &BTN }
+              col(span: 12) do
+                menu_widget_button(w: "100%", h: 40) do 
+                  text { "Play!"}
+                end
+              end
             end
-            row do 
-              col(span: 12) { instance_exec "Quit!", &BTN }
-            end
+            # row do 
+            #   col(span: 12) do
+            #      embed(Button.new do 
+            #         text { "Quit!" }
+            #      end)
+            #   end
+            # end
           end
         end
       end

@@ -1,47 +1,70 @@
 module Widgets
   class MenuWidget < Hoard::Widget
 
-    class Button < Hoard::Ui::Element
+    class Button < Hoard::Ui::CustomElement
       default_block do
         button(
-          w: "100%", 
+          w: "100%", h: 40,
           align: :center, justify: :center, 
           border: { r: 0, g: 0, b: 0 },
           background: { r: 255, g: 255, b: 255, a: 100 },
+          on_click: -> { props.on_click.call}
         ) do 
           text { props.label }
         end 
       end
     end
 
-    def render
-      window(key: :menu, w: 1280, h: 720, background: { r: 0, g: 0, b: 0 }) do 
+    class InnerContainer < Hoard::Ui::CustomElement
+      default_block do
         window(
-          key: :inner_menu, 
           w: 720, h: 480, align: :center, justify: :center, 
           background: { r: 255, g: 255, b: 255, a: 100 },
           border: { r: 255, g: 255, b: 255, a: 150 }
         ) do 
-          window({
-            w: 400, h: 200, align: :center, justify: :center,
-            background: { r: 255, g: 255, b: 255, a: 100 },
-            border: { r: 255, g: 255, b: 255, a: 150 }
-          }) do 
-            row do 
-              col(span: 12) do
-                menu_widget_button(w: "100%", label: "Play!")
+          render_content
+        end
+      end
+    end
+
+    class Buttons < Hoard::Ui::CustomElement
+      default_block do 
+        window({
+          padding: 2,
+          w: 400, h: 200, align: :bottom, justify: :center,
+          background: { r: 255, g: 255, b: 255, a: 100 },
+          border: { r: 255, g: 0, b: 255, a: 150 }
+        }) do 
+          render_content
+        end
+      end
+    end
+
+    class Row < Hoard::Ui::CustomElement
+      default_block do 
+        row(padding: 10) do 
+          render_content
+        end
+      end
+    end
+
+    def render
+      window(w: 1280, h: 720, background: { r: 0, g: 0, b: 0 }, justify: :center, align: :center) do         
+        menu_widget_inner_container do 
+          menu_widget_buttons do 
+            row(margin: 20) do
+              col(span: 12) do 
+                text { "Microjam 031"}
               end
             end
-            row do 
+            menu_widget_row do 
               col(span: 12) do
-                button(
-                  w: "100%", h: 40, 
-                  align: :center, justify: :center, 
-                  border: { r: 0, g: 0, b: 0 },
-                  background: { r: 255, g: 255, b: 255, a: 100 },
-                ) do 
-                  text { "Quit!" }
-                end 
+                menu_widget_button(label: "Play!", on_click: -> { args.gtk.notify! "Play!" })
+              end
+            end
+            menu_widget_row do 
+              col(span: 12) do
+                menu_widget_button(label: "Quit!", on_click: -> { args.gtk.notify! "Quit!" })
               end
             end
           end

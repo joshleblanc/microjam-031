@@ -33,7 +33,6 @@ module Widgets
           padding: 1,
           w: 400, h: 200, align: :bottom, justify: :center,
           background: { r: 255, g: 255, b: 255, a: 100 },
-          border: { r: 255, g: 0, b: 255, a: 150 }
         }) do 
           render_content
         end
